@@ -1,5 +1,5 @@
 {
-  "name": "workshop-os-lambda-auth",
+  "name": "15SOAT-Fase1-lambda",
   "version": "1.0.0",
   "private": true,
   "description": "Fase 3 (evolucao_fase3) — Function Serverless que valida CPF, consulta status do cliente na app principal e emite um JWT RS256 para as APIs protegidas.",

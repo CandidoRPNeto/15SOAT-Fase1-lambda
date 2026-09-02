@@ -9,7 +9,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_iam_role" "lambda_exec" {
-  name = "workshop-os-lambda-auth-exec"
+  name = "15SOAT-Fase1-lambda-exec"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -30,7 +30,7 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 }
 
 resource "aws_lambda_function" "cpf_auth" {
-  function_name = "workshop-os-cpf-auth"
+  function_name = "15SOAT-Fase1-cpf-auth"
   role          = aws_iam_role.lambda_exec.arn
   handler       = "handler.handler"
   runtime       = "nodejs20.x"
@@ -54,7 +54,7 @@ resource "aws_lambda_function" "cpf_auth" {
 # HTTP API (não REST API) — mais barata e simples pra um único endpoint
 # proxy-Lambda, ver ADR-007 em 15SOAT-Fase1.
 resource "aws_apigatewayv2_api" "auth" {
-  name          = "workshop-os-auth"
+  name          = "15SOAT-Fase1-auth"
   protocol_type = "HTTP"
 }
 

@@ -1,4 +1,4 @@
-# workshop-os-lambda-auth
+# 15SOAT-Fase1-lambda
 
 Function Serverless (AWS Lambda) da Fase 3 do Workshop OS — valida o CPF do
 cliente, consulta sua existência/status na base de dados da aplicação
@@ -92,9 +92,9 @@ sessão.
 ```mermaid
 flowchart LR
     Cliente(["Cliente"]) -->|POST /auth/cpf| APIGW["AWS API Gateway<br/>(HTTP API)"]
-    APIGW --> Lambda["Lambda: workshop-os-cpf-auth<br/>Node.js 20"]
+    APIGW --> Lambda["Lambda: 15SOAT-Fase1-cpf-auth<br/>Node.js 20"]
     Lambda -->|"POST /internal/clients/cpf-lookup<br/>X-Internal-Api-Key"| App["App principal<br/>(15SOAT-Fase1, atrás do Traefik/Dokploy)"]
-    App --> DB[("Postgres<br/>workshop-os-infra-database")]
+    App --> DB[("Postgres<br/>15SOAT-Fase1-database")]
     Lambda -->|"assina com JWT_PRIVATE_KEY"| JWT["JWT RS256"]
     JWT -->|token| Cliente
 ```

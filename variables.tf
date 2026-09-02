@@ -5,7 +5,7 @@ variable "aws_region" {
 }
 
 variable "app_base_url" {
-  description = "URL base da aplicação principal (Dokploy) — o Lambda chama POST {app_base_url}/internal/clients/cpf-lookup. Sem default: depende do domínio real (ver workshop-os-infra-kubernetes)."
+  description = "URL base da aplicação principal (Dokploy) — o Lambda chama POST {app_base_url}/internal/clients/cpf-lookup. Sem default: depende do domínio real (ver 15SOAT-Fase1-kubernetes)."
   type        = string
 }
 
@@ -24,7 +24,7 @@ variable "jwt_private_key" {
 variable "jwt_issuer" {
   description = "Claim `iss` do JWT emitido — precisa bater com CLIENT_JWT_ISSUER na app principal."
   type        = string
-  default     = "workshop-os-lambda-auth"
+  default     = "15SOAT-Fase1-lambda"
 }
 
 variable "jwt_ttl_seconds" {
