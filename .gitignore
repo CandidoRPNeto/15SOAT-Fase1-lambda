@@ -1,0 +1,5 @@
+# Placeholder — ajustar quando a linguagem/runtime do Lambda for decidida
+# no epic 5 (RFC-003).
+node_modules/
+.env
+*.zip
