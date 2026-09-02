@@ -10,13 +10,17 @@ permissions:
   contents: read
 
 jobs:
-  # Skeleton — sem runtime/linter definidos ainda (epic 5 decide a linguagem
-  # da function e adiciona lint/test reais). Existe para dar um status check
-  # nomeado ("build") que a branch protection pode exigir desde já.
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Placeholder — implementação pendente (epic 5)
-        run: |
-          echo "workshop-os-lambda-auth: scaffolding only, see epic 5 in 15SOAT-Fase1/backlog.md"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build

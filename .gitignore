@@ -1,5 +1,12 @@
-# Placeholder — ajustar quando a linguagem/runtime do Lambda for decidida
-# no epic 5 (RFC-003).
 node_modules/
+dist/
 .env
 *.zip
+
+# Terraform (Lambda + API Gateway) — .terraform.lock.hcl é commitado.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
