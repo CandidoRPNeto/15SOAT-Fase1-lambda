@@ -97,7 +97,21 @@ flowchart LR
     App --> DB[("Postgres<br/>15SOAT-Fase1-database")]
     Lambda -->|"assina com JWT_PRIVATE_KEY"| JWT["JWT RS256"]
     JWT -->|token| Cliente
+    Cliente -->|"Authorization: Bearer JWT<br/>(todas as rotas da API)"| Traefik["Traefik (gateway)<br/>middleware ForwardAuth"]
+    Traefik -->|"GET /api/v1/auth/verify"| App
+    Traefik -->|"401 sem token válido;<br/>senão X-User-* →"| Servicos["OS · Billing · Execution"]
 ```
+
+## Rotas protegidas: validação do JWT no gateway
+
+O API Gateway da AWS publica só a rota de autenticação (`POST /auth/cpf`). As rotas da aplicação passam pelo **Traefik**, que valida o token em **todas** elas antes de encaminhar, com o middleware `forward-auth` ([ADR-013](https://github.com/CandidoRPNeto/15SOAT-Fase1/blob/master/docs/architecture/adrs/adr-013-gateway-forward-auth.md)):
+
+1. O cliente chama qualquer rota com `Authorization: Bearer <JWT emitido por esta Lambda>`.
+2. O Traefik consulta `GET /api/v1/auth/verify` no OS Service, que confere a assinatura RS256 com a chave pública, a expiração e o emissor (`15SOAT-Fase1-lambda`).
+3. Sem token, ou com token inválido ou expirado, o gateway responde `401` e a requisição não chega a nenhum serviço.
+4. Com token válido, o Traefik injeta `X-User-Id`, `X-User-Role` e `X-User-Client-Id` e encaminha. Billing e Execution confiam nesses headers e não validam o token de novo.
+
+A definição está em [`15SOAT-Fase1-kubernetes/k8s/platform/traefik.yaml`](https://github.com/CandidoRPNeto/15SOAT-Fase1-kubernetes/blob/main/k8s/platform/traefik.yaml) (middleware `forward-auth`).
 
 ## Swagger / Postman
 
